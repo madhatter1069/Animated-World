@@ -1,0 +1,22 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "/Users/jaredclark/Desktop/Animated World/project 5 world/Assets/MayaModels/clark_jared_project3b 1.mb"`)
+{		
+	file -o "/Users/jaredclark/Desktop/Animated World/project 5 world/Assets/MayaModels/clark_jared_project3b 1.mb";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "/Users/jaredclark/Desktop/Animated World/project 5 world/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+sysFile -delete "/Users/jaredclark/Desktop/Animated World/project 5 world/Temp/CommandPipe";
+
+$donepipeKill = `fopen "/Users/jaredclark/Desktop/Animated World/project 5 world/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
